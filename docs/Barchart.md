@@ -1,23 +1,30 @@
 # Barchart
 
-## Zweck der View
+## Purpose
 
-Die Barchart-Ansicht visualisiert den BMI-Verlauf als Balkendiagramm.
+The Barchart view visualizes BMI history as a bar chart.
 
-## Was die View bietet
+## What This View Provides
 
-- Darstellung von BMI-Werten ueber Zeit
-- Farbliche Trennung nach BMI-Bereich (z. B. normal, uebergewichtig)
-- Speicherung der Historie im Browser (`localStorage`)
+- Visualization of BMI values over time
+- Color-coded bars by BMI range
+- Persistence of chart history in browser `localStorage`
 
-## Datenquelle
+## Data Source
 
-- Aktuell basiert die Ansicht auf lokal gespeicherten Daten (`bmiHistory`)
-- Die Koerpergroesse ist derzeit als fester Wert im Code hinterlegt
+- Uses local `bmiHistory` data from `localStorage`
+- Height is currently a fixed value in the code
+- Chart label/value source:
+  - `labels`: `entry.date`
+  - `data`: `entry.bmi`
 
-## Nutzerfluss
+## User Flow
 
-1. Gewicht eingeben
-2. BMI-Eintrag erzeugen
-3. Neuen Balken im Diagramm sehen
-4. Beim Neuladen bleiben Daten erhalten
+1. Open the view
+2. Existing `bmiHistory` data is rendered as bars
+3. Reload the page and confirm the chart still renders persisted history
+
+## Technical Note
+
+`addBMI()` exists in `src/barchart/script.js`, but `src/barchart/barchart.html` currently has no input field or button that calls it.  
+In the current UI, this view is effectively read-only unless `addBMI()` is triggered externally.

@@ -1,32 +1,31 @@
 # BMI-Web-App
-Lerneinheit LF10
+Learning unit LF10
 
-## Fuer wen ist die App?
+## Who Is This App For?
 
-Die BMI-Web-App richtet sich an Nutzende, die ihren BMI berechnen und Messwerte uebersichtlich ansehen wollen.
-Die Anwendung laeuft komplett im Browser.
+The BMI Web App is for users who want to calculate BMI values and review their entries in a simple browser-based interface.
 
-## Schnellstart fuer Nutzende
+## Quick Start
 
-1. Projekt lokal starten:
+1. Start a local web server in the project root:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-2. Im Browser oeffnen: `http://localhost:8000`
-3. Im Menue zwischen `Dashboard`, `Forms` und `Tables` wechseln
+2. Open `http://localhost:8000` in your browser.
+3. Use the menu to switch between `Dashboard`, `Forms`, and `Tables`.
 
-Hinweis: Bitte nicht per `file://` oeffnen, da einige Inhalte per `fetch()` geladen werden.
+Note: Do not open the app via `file://`, because some content is loaded with `fetch()`.
 
-## Was bietet die App?
+## What The App Provides
 
-- BMI-Berechnung mit Eingaben zu Alter, Datum, Gewicht und Groesse
-- Automatische Speicherung der letzten Eingaben im Browser (`localStorage`)
-- Tabellenansicht mit Filter und Sortierung von BMI-Eintraegen
-- Dashboard als zentrale Startansicht mit Schnellueberblick
+- BMI calculation with age, date, weight, and height inputs
+- Automatic persistence of the latest values in `localStorage`
+- Table view with filter and sort options for BMI entries
+- Dashboard as a central entry point and overview
 
-## Ansichten im Ueberblick
+## Views Overview
 
 - [Dashboard](./docs/Dashboard.md)
 - [Formular](./docs/Formular.md)
@@ -35,15 +34,15 @@ Hinweis: Bitte nicht per `file://` oeffnen, da einige Inhalte per `fetch()` gela
 - [Linechart](./docs/Linechart.md)
 - [Settings](./docs/Settings.md)
 
-## Haeufige Probleme
+## Common Issues
 
-- **Leere Seite oder Fehler beim Laden:** App ueber HTTP-Server starten (siehe Schnellstart).
-- **Daten wirken veraltet:** Browserdaten/`localStorage` leeren oder in der App auf Zuruecksetzen gehen.
-- **Darstellung seltsam:** Seite neu laden und auf aktuelle Browser-Version achten.
+- **Blank page or loading errors:** start the app through an HTTP server (see Quick Start).
+- **Outdated data:** clear browser `localStorage` or reset data inside the app.
+- **Layout issues:** refresh the page and use an up-to-date browser version.
 
-## Entwickler-Dokumentation
+## Developer Documentation
 
-Alle Infos fuer Entwicklung, Standards, Tests und Qualitaet:
+Development standards, testing, and quality guidance:
 
 - [Contributing Guide](./CONTRIBUTING.md)
 - [Documentation Index](./docs/README.md)

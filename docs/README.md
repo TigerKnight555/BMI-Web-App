@@ -5,7 +5,7 @@ This folder contains the feature and view documentation for the BMI Web App.
 ## Quick Start
 
 - Start with [Dashboard](./Dashboard.md) to understand the app entry view and navigation.
-- Continue with [Formular](./Formular.md) for BMI input and calculation flow.
+- Continue with [Formular](./Formular.md) for BMI input and calculation flow (menu label: `Forms`, route: `#formular`).
 - Use [Tables](./Tables.md) for filtering and sorting BMI entries.
 - Check [Barchart](./Barchart.md) for BMI history visualization.
 - Review [Linechart](./Linechart.md) for trend visualization details.

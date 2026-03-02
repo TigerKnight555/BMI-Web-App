@@ -1,22 +1,28 @@
 # Dashboard
 
-## Zweck der View
+## Purpose
 
-Das Dashboard ist die Startansicht der App. Es bietet einen schnellen Ueberblick und ist der Einstiegspunkt in die Navigation zu weiteren Bereichen.
+The Dashboard is the app entry view. It provides an overview and acts as the central navigation point.
 
-## Was die View aktuell bietet
+## What This View Provides
 
-- Titelbereich "Dashboard (page title)"
-- Platzhalter fuer Chart- und Tabellenbereiche
-- Seitenlayout fuer kleine und grosse Displays
-- Direkte Menue-Navigation zu `Forms` und `Tables`
+- Page title area: `Dashboard`
+- Embedded Bar Chart iframe (`../barchart/barchart.html`)
+- Embedded Line Chart iframe (`../line_chart/line_chart.html`)
+- Embedded Tables iframe (`../tables/tables.html`)
+- Sidebar navigation (`Dashboard`, `Forms`, `Tables`)
 
-## Nutzerfluss
+## User Flow
 
-1. App starten und Dashboard laden
-2. Im Menue die gewuenschte View waehlen
-3. Zurueck auf Dashboard wechseln, um wieder den Ueberblick zu sehen
+1. Open the app and load Dashboard
+2. Review embedded chart and table sections
+3. Use the sidebar to switch views (`#dashboard`, `#formular`, `#tables`)
 
-## Technischer Hinweis
+## Technical Note
 
-Die View wird dynamisch in den Content-Bereich (`#view`) geladen. Das Routing erfolgt ueber den URL-Hash (`#dashboard`, `#forms`, `#tables`).
+The route content is injected into `#view` by `src/dashboard/dashboard.js`.  
+Routing is hash-based and currently mapped as:
+
+- `#dashboard` -> `./dashboard/dashboard.html`
+- `#formular` -> `./formular/formular.html`
+- `#tables` -> `./tables/tables.html`

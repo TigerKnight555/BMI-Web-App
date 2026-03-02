@@ -1,21 +1,23 @@
 # Linechart
 
-## Zweck der View
+## Purpose
 
-Die Linechart-Ansicht zeigt BMI-Werte als Verlaufskurve ueber die Zeit.
+The Linechart view shows BMI values as a trend line over time.
 
-## Was die View bietet
+## What This View Provides
 
-- Visualisierung von BMI-Daten als Liniendiagramm
-- Darstellung auf einem `canvas`-Element
-- Grundlage fuer Trendbeobachtung statt Einzelwert-Betrachtung
+- BMI data visualization as a line chart
+- Rendering on a `canvas` element
+- Trend-based view instead of single-value focus
 
-## Datenstand
+## Current Data State
 
-- Aktuell werden Mock-Daten verwendet
-- Zielbild: Uebernahme der Daten aus `localStorage` oder einer zentralen Datenquelle
+- `plotChart("bmi-chart")` is executed on load
+- The implementation reads `localStorage['bmiData']` into `rawPlotData`
+- Current chart configuration references `plotData`, which is not defined in the file
 
-## Hinweise zur Einbindung
+## Integration Notes
 
-- Die Chart-Logik erwartet ein `canvas`-Element
-- Standard-ID in der View: `bmi-chart`
+- Chart logic expects a `canvas` element
+- Default canvas id in this view: `bmi-chart`
+- Without a defined `plotData` source, the current implementation may fail at runtime

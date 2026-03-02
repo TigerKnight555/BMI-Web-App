@@ -1,33 +1,35 @@
 # Tables
 
-## Zweck der View
+## Purpose
 
-Die Tabellenansicht zeigt BMI-Messungen strukturiert an und ermoeglicht schnelles Filtern und Sortieren.
+The Tables view displays BMI measurements in a structured format and supports fast filtering and sorting.
 
-## Was die View bietet
+## What This View Provides
 
-- Tabelle mit:
-  - Datum
-  - Gewicht
-  - Groesse
-  - berechnetem BMI
-  - BMI-Bewertung
-- Filter:
-  - Alle Eintraege
-  - Letzte Woche
-  - Letzter Monat
-- Sortierung:
-  - Datum auf/absteigend
-  - BMI auf/absteigend
-- Loesch-Funktion pro Eintrag
+- Table columns:
+  - Date
+  - Weight
+  - Height
+  - Calculated BMI
+  - BMI rating
+- Filters:
+  - All entries
+  - Last week
+  - Last month
+- Sorting:
+  - Date ascending/descending
+  - BMI ascending/descending
+- Delete action per row
 
-## Datenbasis
+## Data Basis
 
-- Die Tabelle wird aktuell aus `src/data/mock.json` befuellt
-- Beim Rendern wird BMI je Zeile aus Gewicht und Groesse berechnet
+- Data is loaded from `localStorage['bmiData']`
+- `bmiData` is expected to be an array of entries (written by Formular)
+- BMI is recalculated per row from weight and height during rendering
+- Deleting a row updates both the table and `localStorage`
 
-## Nutzerfluss
+## User Flow
 
-1. Tabelle oeffnen
-2. Optional filtern und sortieren
-3. Eintraege vergleichen oder loeschen
+1. Open the table view
+2. Optionally apply filters and sorting
+3. Compare or delete entries

@@ -1,29 +1,30 @@
 # Formular
 
-## Zweck der View
+## Purpose
 
-In dieser View geben Nutzende ihre Koerperdaten ein und erhalten direkt den berechneten BMI inklusive Kategorie.
+This view collects user data and calculates BMI with a category result.
 
-## Was die View bietet
+## What This View Provides
 
-- Eingabefelder fuer:
-  - Alter (1-120)
-  - Datum
-  - Gewicht in kg (1-500)
-  - Groesse in cm (50-250)
-- Button **BMI berechnen**
+- Input fields for:
+  - Age (1-120)
+  - Date
+  - Weight in kg (1-500)
+  - Height in cm (50-250)
+- **BMI berechnen** button
 - Button **Clear/Reset**
-- Ergebnisbereich mit BMI-Wert und Kategorie
-- Fehlerbereich fuer ungueltige Eingaben
+- Result area with BMI value and category
+- Error area for invalid inputs
 
-## Logik und Verhalten
+## Logic and Behavior
 
-- Eingaben werden vor der Berechnung validiert
-- BMI wird nach Formel `Gewicht / (Groesse in m)^2` berechnet
-- BMI-Kategorie wird ermittelt (Untergewicht, Normalgewicht, Uebergewicht, Adipositas)
-- Daten werden in `localStorage` gespeichert und beim Laden wiederhergestellt
+- Inputs are validated before calculation
+- BMI formula: `weight / (height in m)^2`
+- Category mapping: Underweight, Normal weight, Overweight, Obesity
+- Each calculation is appended to `localStorage['bmiData']` as a history entry
+- On load, the last history entry is restored into the form
 
-## Nutzerfluss
+## User Flow
 
 1. Open `formular.html` in browser
 2. Fill all 4 input fields
@@ -32,15 +33,15 @@ In dieser View geben Nutzende ihre Koerperdaten ein und erhalten direkt den bere
 5. On reload: Data is still there
 6. "Clear/Reset" deletes all data
 
+## Local Storage
 
-## 💾 LocalStorage
+**Key:** `localStorage['bmiData']`
 
-**Speicherort:** `localStorage['bmiData']`
-
-Daten werden nach der Berechnung als JSON-String gespeichert:
+Data is saved as a JSON array after each calculation:
 
 ```json
-{
+[
+  {
     "age": "25",
     "date": "2025-02-23",
     "weight": "75",
@@ -48,23 +49,24 @@ Daten werden nach der Berechnung als JSON-String gespeichert:
     "bmi": 23.1,
     "category": "Normalgewicht",
     "timestamp": "2025-02-23T14:30:45.123Z"
+  }
+]
+```
+
+### Read Data
+```javascript
+// Read full history
+const history = JSON.parse(localStorage.getItem("bmiData") || "[]");
+console.log(history.length);
+
+// Read last entry
+if (history.length > 0) {
+  const latest = history[history.length - 1];
+  console.log(latest.bmi, latest.category);
 }
 ```
 
-### Daten extrahieren
+### Delete Data
 ```javascript
-// Einfaches Auslesen
-const data = JSON.parse(localStorage.getItem('bmiData'));
-console.log(data.bmi, data.category);
-
-// Mit Null-Check
-if (localStorage.getItem('bmiData')) {
-    const data = JSON.parse(localStorage.getItem('bmiData'));
-    console.log('Gespeicherte Daten:', data);
-}
-```
-
-### Daten löschen
-```javascript
-localStorage.removeItem('bmiData');
+localStorage.removeItem("bmiData");
 ```
