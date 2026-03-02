@@ -42,7 +42,7 @@ function isSpecialUrl(url) {
 
 function toResolvedPath(url, baseDir) {
   // baseDir ist z. B. "./dashboard/"
-  // Dokument liegt bei /src/app.html -> daraus wird /src/dashboard/...
+  // Dokument liegt bei /src/index.html -> daraus wird /src/dashboard/...
   const base = new URL(baseDir, window.location.href);
   const resolved = new URL(url, base);
 

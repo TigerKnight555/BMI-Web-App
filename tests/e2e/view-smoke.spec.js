@@ -5,13 +5,13 @@ const views = [
     name: "Dashboard View",
     hash: "#dashboard",
     activeLink: "Dashboard",
-    expectedText: "Dashboard (page title)",
+    expectedText: "Dashboard",
   },
   {
     name: "Forms View",
-    hash: "#forms",
+    hash: "#formular",
     activeLink: "Forms",
-    expectedText: /Forms content/,
+    expectedText: /BMI Formular/,
   },
   {
     name: "Tables View",
@@ -23,7 +23,7 @@ const views = [
 
 for (const view of views) {
   test(`${view.name} rendert korrekt`, async ({ page }) => {
-    await page.goto(`/src/app.html${view.hash}`);
+    await page.goto(`/src/index.html${view.hash}`);
 
     await expect(page.locator("#sidebarNav a.active")).toHaveText(view.activeLink);
     await expect(page.locator("#view")).toContainText(view.expectedText);
