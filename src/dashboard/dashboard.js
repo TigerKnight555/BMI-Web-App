@@ -1,10 +1,8 @@
-// src/dashboard/dashboard.js
-
 const ROUTES = {
   dashboard: "./dashboard/dashboard.html",
   formular: "./formular/formular.html",
   tables: "./tables/tables.html",
-};
+}
 
 const DEFAULT_ROUTE = "dashboard";
 const VIEW_ID = "view";

@@ -118,25 +118,19 @@ function normalizeCategoryClass(category) {
     .replace("ö", "oe");
 }
 
-function showToast(message, type = "danger") {
-  const container = document.getElementById("toastContainer");
+function showError(message) {
+  const toastEl = document.getElementById("errorToast");
+  const bodyEl = document.getElementById("errorToastBody");
 
-  const toastEl = document.createElement("div");
-  toastEl.className = `toast align-items-center text-bg-${type} border-0`;
+  if (!toastEl || !bodyEl) return;
 
-  toastEl.innerHTML = `
-    <div class="d-flex">
-      <div class="toast-body">${message}</div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-    </div>
-  `;
+  bodyEl.textContent = message;
 
-  container.appendChild(toastEl);
+  const toast = bootstrap.Toast.getOrCreateInstance(toastEl, {
+    delay: 4000
+  });
 
-  const toast = new bootstrap.Toast(toastEl);
   toast.show();
-
-  toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
 }
 
 function hideError() {
@@ -149,32 +143,23 @@ function hideError() {
 
 function calculateBMI() {
   console.log("hello")
-  const input = {
-    age: Number(getInputValue("age")),
-    date: getInputValue("date"),
-    weight: Number(getInputValue("weight")),
-    height: Number(getInputValue("height")),
-  };
+  const age = document.getElementById("age")?.value;
+  const date = document.getElementById("date")?.value;
+  const weight = document.getElementById("weight")?.value;
+  const height = document.getElementById("height")?.value;
 
-  const validationError = validateInputs(input);
-
-  if (validationError) {
-    showToast(validationError);
+  if (!age || !date || !weight || !height) {
+    showError("Bitte füllen Sie alle Felder aus!");
     return;
   }
 
-  const bmi = calculateBMIValue(input.weight, input.height);
-  const category = getBMICategory(bmi);
+  const h = height / 100;
+  const bmi = weight / (h * h);
 
-  saveBMIData({
-    ...input,
-    bmi,
-    category,
-    timestamp: new Date().toISOString(),
-  });
+  document.getElementById("bmiValue").textContent =
+    `Ihr BMI: ${bmi.toFixed(1)}`;
 
-  displayResult(bmi, category);
-  hideError();
+  document.getElementById("result").style.display = "block";
 }
 
 /* =========================================================
