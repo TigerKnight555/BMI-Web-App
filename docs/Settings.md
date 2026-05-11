@@ -1,19 +1,19 @@
-# Settings Feature Dokumentation
+# Settings
 
 ## Übersicht
 Das Settings-Feature ermöglicht es Benutzern, ihre persönlichen Einstellungen zu konfigurieren. Alle Einstellungen werden persistent im Browser-localStorage gespeichert.
 
----
+The Settings view stores basic user preferences in browser `localStorage`.
 
-## 1. User Settings
+## What This View Provides
 
 ### Beschreibung
 Verwaltet benutzerspezifische Einstellungen wie das Geschlecht oder das Datumsformat. Nach jeder Änderung werden die Daten automatisch im localStorage gespeichert und bleiben auch nach einem Neustart der Anwendung erhalten.
 
-### LocalStorage Struktur
-**Key:** `userSettings`
+## Data Model
 
-**Value:**
+### `userSettings`
+
 ```json
 {
   "gender": "none" | "male" | "female",
@@ -21,7 +21,7 @@ Verwaltet benutzerspezifische Einstellungen wie das Geschlecht oder das Datumsfo
 }
 ```
 
-### Implementation
+### `graphType`
 
 #### Initialisierung
 ```javascript
@@ -32,38 +32,15 @@ let settings = {
 };
 ```
 
-#### Laden aus LocalStorage
-```javascript
-function loadSettingsFromStorage() {
-    const savedSettings = localStorage.getItem('userSettings');
-    if (savedSettings) {
-        try {
-            settings = JSON.parse(savedSettings);
-        } catch (error) {
-            console.error('Fehler beim Laden der Einstellungen:', error);
-        }
-    }
-}
-```
+- `bar`
+- `line`
 
-#### Speichern in LocalStorage
-```javascript
-function saveSettingsToStorage() {
-    try {
-        localStorage.setItem('userSettings', JSON.stringify(settings));
-    } catch (error) {
-        console.error('Fehler beim Speichern der Einstellungen:', error);
-    }
-}
-```
+## User Flow
 
-#### Verwendungsbeispiel
-```javascript
-// Beim Laden der Seite
-document.addEventListener('DOMContentLoaded', () => {
-    loadSettingsFromStorage();
-    applySettings();
-});
+1. Click **Einstellungen** to open the dialog
+2. Choose a gender value
+3. Close the dialog
+4. Re-open the app and confirm the setting is still selected
 
 // Bei Änderung der Einstellungen
 function updateGender(newGender) {
@@ -77,64 +54,11 @@ function updateDateFormat(newFormat) {
 }
 ```
 
----
+1. Open `settings/graphType/graphTypeBtn.html`
+2. Click the button to toggle between bar and line
+3. Re-open and verify persisted button state
 
-## 2. Graph Type Button
+## Technical Note
 
-### Beschreibung
-Ermöglicht dem Benutzer, zwischen verschiedenen Diagrammtypen (Balkendiagramm oder Liniendiagramm) zu wechseln. Die Auswahl wird im localStorage gespeichert und beim nächsten Besuch wieder geladen.
-
-### LocalStorage Struktur
-**Key:** `graphType`
-
-**Value:** `'bar'` oder `'line'`
-
-### Implementation
-
-#### Initialisierung
-```javascript
-// Standard-Diagrammtyp
-let graphType = 'bar';
-```
-
-#### Laden aus LocalStorage
-```javascript
-function loadGraphTypeFromStorage() {
-    const savedGraphType = localStorage.getItem('graphType');
-    if (savedGraphType) {
-        try {
-            graphType = JSON.parse(savedGraphType);
-        } catch (error) {
-            console.error('Fehler beim Laden des Diagrammtyps:', error);
-            graphType = 'bar'; // Fallback zum Standard
-        }
-    }
-}
-```
-
-#### Speichern in LocalStorage
-```javascript
-function saveGraphTypeToStorage(type) {
-    try {
-        localStorage.setItem('graphType', JSON.stringify(type));
-    } catch (error) {
-        console.error('Fehler beim Speichern des Diagrammtyps:', error);
-    }
-}
-```
-
-#### Verwendungsbeispiel
-```javascript
-// Beim Laden der Seite
-document.addEventListener('DOMContentLoaded', () => {
-    loadGraphTypeFromStorage();
-    renderGraph(graphType);
-});
-
-// Bei Klick auf den Button
-function toggleGraphType() {
-    graphType = graphType === 'bar' ? 'line' : 'bar';
-    saveGraphTypeToStorage(graphType);
-    renderGraph(graphType);
-}
-```
+Settings are loaded on `DOMContentLoaded` and updated when the selected value changes.  
+Both settings and graph type use inline `onclick` handlers in the current HTML.

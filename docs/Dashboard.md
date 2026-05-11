@@ -1,51 +1,28 @@
-# Dashboard Documentation
+# Dashboard
 
-## Überblick
+## Purpose
 
-Das Dashboard ist die zentrale Übersichtsseite der BMI-Web-App. Es dient als Startpunkt der Anwendung und zeigt (aktuell als Platzhalter/Wireframe) typische Dashboard-Elemente wie Karten/Widgets, Charts und eine tabellarische Übersicht. Die Inhalte werden dynamisch in einen zentralen Content-Bereich geladen, ohne dass die komplette Seite neu geladen werden muss.
+The Dashboard is the app entry view. It provides an overview and acts as the central navigation point.
 
-## Ziel / Zweck
+## What This View Provides
 
-- **Schneller Einstieg** in die App über eine zentrale Oberfläche
-- **Navigation** zu weiteren Bereichen (Forms, Tables)
-- **Darstellung von Kennzahlen** (z.B. BMI-Verläufe, letzte Einträge) – derzeit als Platzhalter vorgesehen
-- **Skalierbare Struktur**, damit später weitere Seiten/Widgets leicht ergänzt werden können
+- Page title area: `Dashboard`
+- Embedded Bar Chart iframe (`../barchart/barchart.html`)
+- Embedded Line Chart iframe (`../line_chart/line_chart.html`)
+- Embedded Tables iframe (`../tables/tables.html`)
+- Sidebar navigation (`Dashboard`, `Forms`, `Tables`)
 
----
+## User Flow
 
-## Projektstruktur (relevant)
+1. Open the app and load Dashboard
+2. Review embedded chart and table sections
+3. Use the sidebar to switch views (`#dashboard`, `#formular`, `#tables`)
 
-Typische Struktur (Auszug):
+## Technical Note
 
-- `index.html` (Projekt-Root)  
-  Einstiegspunkt. Leitet auf die App weiter.
+The route content is injected into `#view` by `src/dashboard/dashboard.js`.  
+Routing is hash-based and currently mapped as:
 
-- `src/app.html`  
-  Enthält Layout (Sidebar + Content-Area `#view`) und bindet CSS/JS ein.
-
-- `src/dashboard/dashboard.html`  
-  Dashboard-Inhalt (Platzhalter-Layout, Cards/Charts/Tables-Bereiche).
-
-- `src/dashboard/dashboard.css`  
-  Styling für Sidebar, Layout, Platzhalter-Komponenten.
-
-- `src/dashboard/dashboard.js`  
-  Client-seitige Navigation (Routing) und dynamisches Nachladen der Seiten in `#view`.
-
-- `src/forms/forms.html`  
-  Inhalt für den Forms-Bereich.
-
-- `src/tables/tables.html`  
-  Inhalt für den Tables-Bereich.
-
----
-
-## Starten & Aufrufen
-
-### Lokaler Webserver
-
-Im Projekt-Root (dort wo `index.html` liegt) ausführen:
-
-```bash
-python3 -m http.server 8000
-```
+- `#dashboard` -> `./dashboard/dashboard.html`
+- `#formular` -> `./formular/formular.html`
+- `#tables` -> `./tables/tables.html`

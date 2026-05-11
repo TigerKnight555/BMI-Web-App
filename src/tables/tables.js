@@ -214,19 +214,14 @@
     tablesInit();
   }
 
-    /* =========================================================
-     Toast
-  ========================================================= */
-
-  function showErrorToast(message) {
-  const toastEl = document.getElementById("errorToast");
-  const toastBody = document.getElementById("errorToastBody");
-
-  if (!toastEl || !toastBody) return;
-
-  toastBody.textContent = message;
-
-  const toast = new bootstrap.Toast(toastEl);
-  toast.show();
-}
+  if (window.__TABLES_TEST__) {
+    window.__tablesTestUtils = {
+      calculateBMI,
+      getBMICategory,
+      filterEntries,
+      sortEntries,
+      isWithinDays,
+      tablesInit,
+    };
+  }
 })();

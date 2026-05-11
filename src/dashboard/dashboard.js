@@ -56,6 +56,8 @@ function shouldRewrite(url) {
 }
 
 function resolvePath(url, baseDir) {
+  // baseDir is e.g. "./dashboard/"
+  // document path is /src/index.html -> resolved paths become /src/dashboard/...
   const base = new URL(baseDir, window.location.href);
   const resolved = new URL(url, base);
   return `${resolved.pathname}${resolved.search}${resolved.hash}`;

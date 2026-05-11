@@ -1,30 +1,30 @@
-# BMI Form - Input Component
+# Formular
 
-## 📝 Project Description
-This part of the BMI calculator is responsible for **user input**. Users can enter their personal data and calculate their BMI.
+## Purpose
 
-## 🎯 Features
+This view collects user data and calculates BMI with a category result.
 
-### Input Fields
-- **Age** (1-120 years)
-- **Date** (calculation date)
-- **Weight** (1-500 kg)
-- **Height** (50-250 cm)
+## What This View Provides
 
-### Buttons
-- **BMI berechnen** - Starts the calculation
-- **Clear/Reset** - Clears all inputs and results
+- Input fields for:
+  - Age (1-120)
+  - Date
+  - Weight in kg (1-500)
+  - Height in cm (50-250)
+- **BMI berechnen** button
+- Button **Clear/Reset**
+- Result area with BMI value and category
+- Error area for invalid inputs
 
-### Functionality
-- ✅ **Input Validation** - Checks for empty fields and valid values
-- ✅ **BMI Calculation** - Formula: `Weight / (Height/100)²`
-- ✅ **BMI Categories** - Underweight, Normal weight, Overweight, Obesity
-- ✅ **Local Storage** - Saves inputs in browser
-- ✅ **Auto-Load** - Loads saved data on page start
-- ✅ **Responsive Design** - Works on desktop and mobile
+## Logic and Behavior
 
+- Inputs are validated before calculation
+- BMI formula: `weight / (height in m)^2`
+- Category mapping: Underweight, Normal weight, Overweight, Obesity
+- Each calculation is appended to `localStorage['bmiData']` as a history entry
+- On load, the last history entry is restored into the form
 
-## 🚀 Usage
+## User Flow
 
 1. Open `formular.html` in browser
 2. Fill all 4 input fields
@@ -33,39 +33,40 @@ This part of the BMI calculator is responsible for **user input**. Users can ent
 5. On reload: Data is still there
 6. "Clear/Reset" deletes all data
 
+## Local Storage
 
-## 💾 LocalStorage
+**Key:** `localStorage['bmiData']`
 
-**Speicherort:** `localStorage['bmiData']`
-
-Daten werden nach der Berechnung als JSON-String gespeichert:
+Data is saved as a JSON array after each calculation:
 
 ```json
-{
+[
+  {
     "age": "25",
     "date": "2025-02-23",
     "weight": "75",
     "height": "180",
     "bmi": 23.1,
     "category": "Normalgewicht",
-    "timestamp": "2025-02-23T14:30:45.123Z" // new Date().toISOString()
+    "timestamp": "2025-02-23T14:30:45.123Z"
+  }
+]
+```
+
+### Read Data
+```javascript
+// Read full history
+const history = JSON.parse(localStorage.getItem("bmiData") || "[]");
+console.log(history.length);
+
+// Read last entry
+if (history.length > 0) {
+  const latest = history[history.length - 1];
+  console.log(latest.bmi, latest.category);
 }
 ```
 
-### Daten extrahieren
+### Delete Data
 ```javascript
-// Einfaches Auslesen
-const data = JSON.parse(localStorage.getItem('bmiData'));
-console.log(data.bmi, data.category);
-
-// Mit Null-Check
-if (localStorage.getItem('bmiData')) {
-    const data = JSON.parse(localStorage.getItem('bmiData'));
-    console.log('Gespeicherte Daten:', data);
-}
-```
-
-### Daten löschen
-```javascript
-localStorage.removeItem('bmiData');
+localStorage.removeItem("bmiData");
 ```
