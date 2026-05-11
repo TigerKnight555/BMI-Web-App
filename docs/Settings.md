@@ -1,14 +1,14 @@
 # Settings Feature Dokumentation
 
 ## Übersicht
-Das Settings-Feature ermöglicht es Benutzern, ihre persönlichen Einstellungen sowie Diagramm-Präferenzen zu speichern und zu verwalten. Alle Einstellungen werden persistent im Browser-localStorage gespeichert.
+Das Settings-Feature ermöglicht es Benutzern, ihre persönlichen Einstellungen zu konfigurieren. Alle Einstellungen werden persistent im Browser-localStorage gespeichert.
 
 ---
 
 ## 1. User Settings
 
 ### Beschreibung
-Verwaltet benutzerspezifische Einstellungen wie das Geschlecht. Nach jeder Änderung werden die Daten automatisch im localStorage gespeichert und bleiben auch nach einem Neustart der Anwendung erhalten.
+Verwaltet benutzerspezifische Einstellungen wie das Geschlecht oder das Datumsformat. Nach jeder Änderung werden die Daten automatisch im localStorage gespeichert und bleiben auch nach einem Neustart der Anwendung erhalten.
 
 ### LocalStorage Struktur
 **Key:** `userSettings`
@@ -16,7 +16,8 @@ Verwaltet benutzerspezifische Einstellungen wie das Geschlecht. Nach jeder Ände
 **Value:**
 ```json
 {
-  "gender": "none" | "male" | "female"
+  "gender": "none" | "male" | "female",
+  "dateFormat": "YYYY-MM-DD" / "YYYY-MM-DD HH:mm"
 }
 ```
 
@@ -26,7 +27,8 @@ Verwaltet benutzerspezifische Einstellungen wie das Geschlecht. Nach jeder Ände
 ```javascript
 // Standard-Einstellungen
 let settings = {
-    gender: 'none'
+    gender: 'none',
+    dateFormat: 'YYYY-MM-DD'
 };
 ```
 
@@ -66,6 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // Bei Änderung der Einstellungen
 function updateGender(newGender) {
     settings.gender = newGender;
+    saveSettingsToStorage();
+}
+
+function updateDateFormat(newFormat) {
+    settings.dateFormat = newFormat;
     saveSettingsToStorage();
 }
 ```
