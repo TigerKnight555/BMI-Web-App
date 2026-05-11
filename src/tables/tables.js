@@ -56,8 +56,8 @@
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     } catch {
-      return [];
-    }
+      showErrorToast("Fehler beim Laden der gespeicherten Daten.");
+    return [];    }
   }
 
   function saveToStorage() {
@@ -212,5 +212,16 @@
     document.addEventListener("DOMContentLoaded", tablesInit);
   } else {
     tablesInit();
+  }
+
+  if (window.__TABLES_TEST__) {
+    window.__tablesTestUtils = {
+      calculateBMI,
+      getBMICategory,
+      filterEntries,
+      sortEntries,
+      isWithinDays,
+      tablesInit,
+    };
   }
 })();

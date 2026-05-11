@@ -119,11 +119,18 @@ function normalizeCategoryClass(category) {
 }
 
 function showError(message) {
-  const errorEl = document.getElementById("error");
-  if (!errorEl) return;
+  const toastEl = document.getElementById("errorToast");
+  const bodyEl = document.getElementById("errorToastBody");
 
-  errorEl.textContent = message;
-  showElement("error");
+  if (!toastEl || !bodyEl) return;
+
+  bodyEl.textContent = message;
+
+  const toast = bootstrap.Toast.getOrCreateInstance(toastEl, {
+    delay: 4000
+  });
+
+  toast.show();
 }
 
 function hideError() {
@@ -135,32 +142,24 @@ function hideError() {
 ========================================================= */
 
 function calculateBMI() {
-  const input = {
-    age: Number(getInputValue("age")),
-    date: getInputValue("date"),
-    weight: Number(getInputValue("weight")),
-    height: Number(getInputValue("height")),
-  };
+  console.log("hello")
+  const age = document.getElementById("age")?.value;
+  const date = document.getElementById("date")?.value;
+  const weight = document.getElementById("weight")?.value;
+  const height = document.getElementById("height")?.value;
 
-  const validationError = validateInputs(input);
-
-  if (validationError) {
-    showError(validationError);
+  if (!age || !date || !weight || !height) {
+    showError("Bitte füllen Sie alle Felder aus!");
     return;
   }
 
-  const bmi = calculateBMIValue(input.weight, input.height);
-  const category = getBMICategory(bmi);
+  const h = height / 100;
+  const bmi = weight / (h * h);
 
-  saveBMIData({
-    ...input,
-    bmi,
-    category,
-    timestamp: new Date().toISOString(),
-  });
+  document.getElementById("bmiValue").textContent =
+    `Ihr BMI: ${bmi.toFixed(1)}`;
 
-  displayResult(bmi, category);
-  hideError();
+  document.getElementById("result").style.display = "block";
 }
 
 /* =========================================================
@@ -200,7 +199,22 @@ function initForm() {
   loadFromLocalStorage();
 }
 
-window.calculateBMI = calculateBMI;
-window.clearData = clearData;
+if (typeof window !== "undefined") {
+  window.calculateBMI = calculateBMI;
+  window.clearData = clearData;
+}
 
-document.addEventListener("DOMContentLoaded", initForm);
+if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", initForm);
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    calculateBMIValue,
+    getBMICategory,
+    validateInputs,
+    validateRange,
+    normalizeCategoryClass,
+    getStoredBMIData,
+  };
+}
