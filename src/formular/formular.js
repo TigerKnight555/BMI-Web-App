@@ -83,38 +83,18 @@ function validateInputs({ age, date, weight, height }) {
 ========================================================= */
 
 function getStoredBMIData() {
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return JSON.parse(data || "[]");
-  } catch (error) {
-    console.error("Error reading from localStorage:", error);
-    showError("Fehler beim Laden der Daten.");
-    return [];
-  }
+  return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 }
-
 
 function saveBMIData(entry) {
-  try {
-    const data = getStoredBMIData();
-    data.push(entry);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    console.log("Data saved successfully");
-  } catch (error) {
-    console.error("Error saving to localStorage:", error);
-    showError("Fehler beim Speichern der Daten. LocalStorage könnte voll oder deaktiviert sein.");
-  }
+  const data = getStoredBMIData();
+  data.push(entry);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-
 function getLastBMIEntry() {
-  try {
-    const data = getStoredBMIData();
-    return data[data.length - 1];
-  } catch (error) {
-    console.error("Error getting last entry:", error);
-    return null;
-  }
+  const data = getStoredBMIData();
+  return data[data.length - 1];
 }
 
 /* =========================================================
@@ -139,11 +119,18 @@ function normalizeCategoryClass(category) {
 }
 
 function showError(message) {
-  const errorEl = document.getElementById("error");
-  if (!errorEl) return;
+  const toastEl = document.getElementById("errorToast");
+  const bodyEl = document.getElementById("errorToastBody");
 
-  errorEl.textContent = message;
-  showElement("error");
+  if (!toastEl || !bodyEl) return;
+
+  bodyEl.textContent = message;
+
+  const toast = bootstrap.Toast.getOrCreateInstance(toastEl, {
+    delay: 4000
+  });
+
+  toast.show();
 }
 
 function hideError() {
@@ -155,32 +142,24 @@ function hideError() {
 ========================================================= */
 
 function calculateBMI() {
-  const input = {
-    age: Number(getInputValue("age")),
-    date: getInputValue("date"),
-    weight: Number(getInputValue("weight")),
-    height: Number(getInputValue("height")),
-  };
+  console.log("hello")
+  const age = document.getElementById("age")?.value;
+  const date = document.getElementById("date")?.value;
+  const weight = document.getElementById("weight")?.value;
+  const height = document.getElementById("height")?.value;
 
-  const validationError = validateInputs(input);
-
-  if (validationError) {
-    showError(validationError);
+  if (!age || !date || !weight || !height) {
+    showError("Bitte füllen Sie alle Felder aus!");
     return;
   }
 
-  const bmi = calculateBMIValue(input.weight, input.height);
-  const category = getBMICategory(bmi);
+  const h = height / 100;
+  const bmi = weight / (h * h);
 
-  saveBMIData({
-    ...input,
-    bmi,
-    category,
-    timestamp: new Date().toISOString(),
-  });
+  document.getElementById("bmiValue").textContent =
+    `Ihr BMI: ${bmi.toFixed(1)}`;
 
-  displayResult(bmi, category);
-  hideError();
+  document.getElementById("result").style.display = "block";
 }
 
 /* =========================================================
@@ -188,43 +167,28 @@ function calculateBMI() {
 ========================================================= */
 
 function loadFromLocalStorage() {
-  try {
-    const data = getLastBMIEntry();
-    if (!data) return;
+  const data = getLastBMIEntry();
+  if (!data) return;
 
-    setInputValue("age", data.age);
-    setInputValue("date", data.date);
-    setInputValue("weight", data.weight);
-    setInputValue("height", data.height);
+  setInputValue("age", data.age);
+  setInputValue("date", data.date);
+  setInputValue("weight", data.weight);
+  setInputValue("height", data.height);
 
-    if (data.bmi && data.category) {
-      displayResult(data.bmi, data.category);
-    }
-
-    console.log("Data loaded successfully");
-  } catch (error) {
-    console.error("Error loading from localStorage:", error);
-    showError("Fehler beim Laden der gespeicherten Daten.");
+  if (data.bmi && data.category) {
+    displayResult(data.bmi, data.category);
   }
 }
 
-
 function clearData() {
-  try {
-    localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(STORAGE_KEY);
 
-    ["age", "date", "weight", "height"].forEach((id) =>
-      setInputValue(id, "")
-    );
+  ["age", "date", "weight", "height"].forEach((id) =>
+    setInputValue(id, "")
+  );
 
-    hideElement("result");
-    hideError();
-
-    console.log("Data cleared successfully");
-  } catch (error) {
-    console.error("Error clearing localStorage:", error);
-    showError("Fehler beim Löschen der Daten.");
-  }
+  hideElement("result");
+  hideError();
 }
 
 /* =========================================================
