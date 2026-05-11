@@ -1,25 +1,48 @@
 # BMI-Web-App
-Lerneinheit LF10
+Learning unit LF10
 
-## Getting Started
+## Who Is This App For?
 
-Startet einen lokalen Webserver im Projektverzeichnis:
+The BMI Web App is for users who want to calculate BMI values and review their entries in a simple browser-based interface.
+
+## Quick Start
+
+1. Start a local web server in the project root:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Oeffnet dann im Browser: [http://localhost:8000](http://localhost:8000)
+2. Open `http://localhost:8000` in your browser.
+3. Use the menu to switch between `Dashboard`, `Forms`, and `Tables`.
 
-> **Hinweis:** Die App muss ueber einen HTTP-Server laufen. Ein direktes Oeffnen der HTML-Dateien (`file://`) funktioniert nicht, da `fetch()`-Aufrufe eine Server-Umgebung benoetigen.
+Note: Do not open the app via `file://`, because some content is loaded with `fetch()`.
 
-## Documentation
+## What The App Provides
 
-Here you can find the links to the features in this software.
+- BMI calculation with age, date, weight, and height inputs
+- Automatic persistence of the latest values in `localStorage`
+- Table view with filter and sort options for BMI entries
+- Dashboard as a central entry point and overview
+
+## Views Overview
 
 - [Dashboard](./docs/Dashboard.md)
-- [Barchart](./docs/Barchart.md)
-- [Linechart](./docs/Linechart.md) 
-- [Tables](./docs/Tables.md) 
-- [Settings](./docs/Settings.md) 
 - [Formular](./docs/Formular.md)
+- [Tables](./docs/Tables.md)
+- [Barchart](./docs/Barchart.md)
+- [Linechart](./docs/Linechart.md)
+- [Settings](./docs/Settings.md)
+
+## Common Issues
+
+- **Blank page or loading errors:** start the app through an HTTP server (see Quick Start).
+- **Outdated data:** clear browser `localStorage` or reset data inside the app.
+- **Layout issues:** refresh the page and use an up-to-date browser version.
+
+## Developer Documentation
+
+Development standards, testing, and quality guidance:
+
+- [Contributing Guide](./CONTRIBUTING.md)
+- [Documentation Index](./docs/README.md)
