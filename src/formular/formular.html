@@ -1,36 +1,52 @@
-<h1>BMI Formular</h1>
+<!DOCTYPE html>
+<html lang="de">
 
-<form id="bmiForm">
-  <input type="number" id="age" placeholder="Age (Years)" required min="1" max="120">
-  <input type="date" id="date" required>
-  <input type="number" id="weight" placeholder="Weight in Kg" required min="1" max="500">
-  <input type="number" id="height" placeholder="Height in cm" required min="50" max="250">
+<head>
+    <meta charset="UTF-8" />
+    <title>BMI Rechner</title>
 
-  <button type="button" onclick="calculateBMI()">BMI berechnen</button>
-  <button type="button" onclick="clearData()" style="margin-top:10px;background-color:#f44336;">
-    Clear / Reset
-  </button>
-</form>
+    <link rel="stylesheet" href="./formular.css" />
+    <script src="./formular.js" defer></script>
+</head>
 
-<div id="result" style="display:none;">
-  <h2>Ihr BMI Ergebnis</h2>
-  <p id="bmiValue"></p>
-  <p id="bmiCategory"></p>
-</div>
+<body>
+    <h1>BMI Formular</h1>
 
-<!-- Toast container -->
-<div class="toast-container position-fixed top-0 end-0 p-3">
-  <div id="errorToast" class="toast text-bg-danger border-0" role="alert">
-    <div class="d-flex">
-      <div id="errorToastBody" class="toast-body"></div>
+    <form id="bmiForm">
 
-      <button
-        type="button"
-        class="btn-close btn-close-white me-2 m-auto"
-        data-bs-dismiss="toast">
-      </button>
+        <label for="age">Alter (Jahre):</label>
+        <input type="number" id="age" name="Age" placeholder="z.B. 25" required min="1" max="120"
+            aria-describedby="ageHelp" />
+        <small id="ageHelp" style="display:block; color:#666; margin-bottom:10px;">
+            Bitte geben Sie Ihr Alter zwischen 1 und 120 ein.
+        </small>
+
+        <label for="date">Geburtsdatum:</label>
+        <input type="date" id="date" name="date" required />
+
+        <label for="weight">Gewicht (kg):</label>
+        <input type="number" id="weight" name="weight" placeholder="z.B. 75" required min="1" max="500" />
+
+        <label for="height">Größe (cm):</label>
+        <input type="number" id="height" name="height" placeholder="z.B. 175" required min="50" max="250" />
+
+        <button type="button" onclick="calculateBMI()" aria-label="BMI berechnen">
+            BMI berechnen
+        </button>
+
+        <button type="button" onclick="clearData()" style="margin-top: 10px; background-color: #f44336;"
+            aria-label="Alle Eingaben löschen">
+            Clear/Reset
+        </button>
+    </form>
+
+    <div id="error" role="alert" aria-live="polite"></div>
+
+    <div id="result" style="display: none;" role="region" aria-label="BMI Ergebnis">
+        <h2>Ihr BMI Ergebnis</h2>
+        <p id="bmiValue"></p>
+        <p id="bmiCategory"></p>
     </div>
-  </div>
-</div>
+</body>
 
-<script src="./formular.js"></script>
+</html>
