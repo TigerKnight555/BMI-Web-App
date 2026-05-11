@@ -56,8 +56,8 @@
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     } catch {
-      return [];
-    }
+      showErrorToast("Fehler beim Laden der gespeicherten Daten.");
+    return [];    }
   }
 
   function saveToStorage() {
